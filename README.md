@@ -60,7 +60,9 @@ console.log('Data from gosumemory:', data);
 console.error('Error retrieving data:', error.message);
 }
 ```
+### Credits
 
+Gosumemory  [https://github.com/l3lackShark/gosumemory Github for gosumemory project]
 ### Contributing
 Contributions are welcome! If you find any issues or want to add new features, feel free to submit a pull request.
 
