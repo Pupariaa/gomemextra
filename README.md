@@ -1,6 +1,8 @@
 # gomemextra
+[![npm version](https://img.shields.io/npm/v/gomemextra)]([https://www.npmjs.com/package/@hizollo/osu-api](https://www.npmjs.com/package/gomemextra))
+[![Downloads](https://img.shields.io/npm/dt/gomemextra)](https://www.npmjs.com/package/gomemextra)
 
-Gomemextrais a Node.js utility for managing gosumemory processes and configurations.
+Gomemextra is a Node.js utility for managing gosumemory processes and configurations.
 
 ## Installation
 
