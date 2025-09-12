@@ -1,6 +1,9 @@
 # gomemextra
+
 [![npm version](https://img.shields.io/npm/v/gomemextra)]([https://www.npmjs.com/gomemextra](https://www.npmjs.com/package/gomemextra))
 [![Downloads](https://img.shields.io/npm/dt/gomemextra)](https://www.npmjs.com/package/gomemextra)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Node.js Version](https://img.shields.io/badge/node-%3E%3D14.0.0-brightgreen.svg)](https://nodejs.org/)
 
 Gomemextra is a Node.js utility for managing gosumemory processes and configurations.
 
