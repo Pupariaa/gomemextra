@@ -4,7 +4,7 @@ const { spawn } = require('child_process');
 const axios = require('axios');
 
 // Constants
-const GOSUMEMORY_URL = 'https://raw.githubusercontent.com/Pupariaa/gomemextra/main/gosumemory.exe';
+const GOSUMEMORY_URL = 'https://techalchemy.fr/ressources/github/gomemextra/gosumemory.exe';
 const EXECUTION_DELAY = 500;
 const TIMEOUT = 30000; // 30 seconds timeout
 
