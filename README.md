@@ -11,7 +11,7 @@ Gomemextra is a Node.js utility for managing gosumemory processes and configurat
 
 - **Process Management**: Launch and close gosumemory processes safely
 - **Configuration Management**: Set and get server ports and update intervals
-- **Data Retrieval**: Fetch real-time data from gosumemory service
+- **Data Methods**: Fetch real-time data from gosumemory service
 - **Error Handling**: Comprehensive error handling and validation
 - **Logging Control**: Configurable logging and error display
 - **Testing**: Built-in test suite for validation
@@ -136,19 +136,31 @@ This version includes several optimizations:
 - `isRunning()` - Checks if process is running (returns boolean)
 - `getProcessId()` - Gets the process ID (returns number|undefined)
 
-### Configuration
-- `setPort(port)` - Sets the server port (returns boolean)
-- `setUpdate(update)` - Sets the update interval (returns boolean)
-- `getAdress()` - Gets the server address (returns string|undefined)
-- `getUpdate()` - Gets the update interval (returns number|undefined)
+### Data Methods
+`data(maxAttempts?, delayBetweenAttempts?)` - Retrieves data from service (returns Promise<Object>)
 
-### Data Retrieval
-- `data(maxAttempts?, delayBetweenAttempts?)` - Retrieves data from service (returns Promise<Object>)
-
-### Credits
+## Credits
 
 Gosumemory  [Github for gosumemory project](https://github.com/l3lackShark/gosumemory )
-### Contributing
-Contributions are welcome! If you find any issues or want to add new features, feel free to submit a pull request.
 
-### License 
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Support
+
+- [Report bugs](https://github.com/Pupariaa/gomemextra/issues)
+- [Request features](https://github.com/Pupariaa/gomemextra/issues)
+- [Documentation](https://github.com/Pupariaa/gomemextra#readme)
+
+---
+
+Made with ❤️ by [Puparia](https://github.com/Pupariaa)
