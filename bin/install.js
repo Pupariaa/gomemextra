@@ -1,37 +1,96 @@
 const fs = require('fs');
 const path = require('path');
 const { spawn } = require('child_process');
+const axios = require('axios');
+
+// Constants
+const GOSUMEMORY_URL = 'https://raw.githubusercontent.com/Pupariaa/gomemextra/main/gosumemory.exe';
+const EXECUTION_DELAY = 500;
+const TIMEOUT = 30000; // 30 seconds timeout
 
 (async () => {
-    const { default: fetch } = await import('node-fetch');
-    // URL of the raw gosumemory.exe file on GitHub
-    const rawUrl = 'https://raw.githubusercontent.com/Pupariaa/gomemextra/main/gosumemory.exe';
+    const filePath = path.join(__dirname, 'gosumemory.exe');
 
     try {
-        // Fetch the gosumemory.exe file as an ArrayBuffer
-        const response = await fetch(rawUrl);
-        
-        // Convert the ArrayBuffer to a Buffer
-        const buffer = await response.buffer();
+        console.log('Starting gosumemory.exe download...');
 
-        // Save the gosumemory.exe file locally
-        const filePath = path.join(__dirname, 'gosumemory.exe');
-        fs.writeFileSync(filePath, buffer);
+        // Check if file already exists
+        if (fs.existsSync(filePath)) {
+            console.log('gosumemory.exe already exists, skipping download.');
+        } else {
+            // Fetch the gosumemory.exe file using axios
+            const response = await axios.get(GOSUMEMORY_URL, {
+                responseType: 'arraybuffer',
+                timeout: TIMEOUT
+            });
 
-        console.log('Downloaded resource: gosumemory.exe');
+            // Save the file
+            fs.writeFileSync(filePath, response.data);
+            console.log('Successfully downloaded: gosumemory.exe');
+        }
+
+        // Verify the file exists and is executable
+        if (!fs.existsSync(filePath)) {
+            throw new Error('Downloaded file not found');
+        }
+
+        const stats = fs.statSync(filePath);
+        if (stats.size === 0) {
+            throw new Error('Downloaded file is empty');
+        }
+
+        console.log('Executing gosumemory.exe to generate config...');
 
         // Spawn a child process to run gosumemory.exe
-        const childProcess = spawn(filePath);
+        const childProcess = spawn(filePath, [], {
+            stdio: 'pipe',
+            timeout: TIMEOUT
+        });
 
-        // Wait for 500 milliseconds (0.5 seconds)
-        await new Promise(resolve => setTimeout(resolve, 500));
+        // Handle process events
+        childProcess.on('error', (error) => {
+            console.error(`Process error: ${error.message}`);
+        });
 
-        // Kill the child process
-        childProcess.kill();
+        childProcess.stdout?.on('data', (data) => {
+            console.log(`gosumemory: ${data}`);
+        });
+
+        childProcess.stderr?.on('data', (data) => {
+            console.error(`gosumemory error: ${data}`);
+        });
+
+        // Wait for the process to initialize
+        await new Promise((resolve) => setTimeout(resolve, EXECUTION_DELAY));
+
+        // Kill the child process gracefully
+        if (!childProcess.killed) {
+            childProcess.kill();
+        }
 
         console.log('Successfully executed gosumemory.exe');
+
+        // Check if config.ini was created
+        const configPath = path.join(__dirname, 'config.ini');
+        if (fs.existsSync(configPath)) {
+            console.log('Configuration file generated successfully');
+        } else {
+            console.warn('Warning: config.ini file was not generated');
+        }
+
     } catch (error) {
-        // Handle errors during the execution of the script
         console.error(`Error during script execution: ${error.message}`);
+
+        // Clean up partial download
+        if (fs.existsSync(filePath)) {
+            try {
+                fs.unlinkSync(filePath);
+                console.log('Cleaned up partial download');
+            } catch (cleanupError) {
+                console.error(`Cleanup error: ${cleanupError.message}`);
+            }
+        }
+
+        process.exit(1);
     }
 })();
